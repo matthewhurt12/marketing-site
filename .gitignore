@@ -1,0 +1,15 @@
+node_modules/
+dist/
+
+# Raw source images (copies live in public/)
+alex.png
+jordan..png
+sam.png
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
