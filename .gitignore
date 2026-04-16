@@ -1,5 +1,7 @@
 node_modules/
 dist/
+.env
+.env.local
 
 # Raw source images (copies live in public/)
 alex.png

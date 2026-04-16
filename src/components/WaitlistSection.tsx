@@ -7,11 +7,28 @@ export default function WaitlistSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) setSubmitted(true);
+    if (!email.trim() || status === "sending") return;
+
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -30,7 +47,7 @@ export default function WaitlistSection() {
           Join the waitlist and be first to experience dating the way it should be.
         </p>
 
-        {submitted ? (
+        {status === "success" ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -48,14 +65,19 @@ export default function WaitlistSection() {
               placeholder="Your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-secondary/50 border border-border rounded-full px-6 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary aura-transition"
+              disabled={status === "sending"}
+              className="flex-1 bg-secondary/50 border border-border rounded-full px-6 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary aura-transition disabled:opacity-50"
             />
             <button
               type="submit"
-              className="bg-primary text-primary-foreground rounded-full px-8 py-4 text-sm font-medium tracking-widest uppercase aura-transition hover:opacity-90 whitespace-nowrap"
+              disabled={status === "sending"}
+              className="bg-primary text-primary-foreground rounded-full px-8 py-4 text-sm font-medium tracking-widest uppercase aura-transition hover:opacity-90 whitespace-nowrap disabled:opacity-50"
             >
-              Join
+              {status === "sending" ? "..." : "Join"}
             </button>
+            {status === "error" && (
+              <p className="text-xs text-red-400 mt-2 sm:mt-0 sm:self-center">Something went wrong. Try again.</p>
+            )}
           </form>
         )}
       </motion.div>
