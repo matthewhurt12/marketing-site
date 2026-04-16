@@ -7,7 +7,6 @@ const PROFILE_IMAGE = "/alex-profile.jpg";
 
 export default function AppDemoMatch({ onComplete }: { onComplete: () => void }) {
   const [barWidth, setBarWidth] = useState(0);
-  const [imgLoaded, setImgLoaded] = useState(false);
   const [tapped, setTapped] = useState(false);
   const [showTapRing, setShowTapRing] = useState(false);
 
@@ -44,11 +43,8 @@ export default function AppDemoMatch({ onComplete }: { onComplete: () => void })
               <img
                 src={PROFILE_IMAGE}
                 alt="Alex"
-                className={`w-full h-full object-cover transition-opacity duration-300 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
-                onLoad={() => setImgLoaded(true)}
-                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                className="w-full h-full object-cover"
               />
-              {!imgLoaded && <span className="text-lg">😊</span>}
             </div>
           </div>
           <div className="flex-1 min-w-0">

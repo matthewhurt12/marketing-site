@@ -16,14 +16,13 @@ const existingDates = [
 ];
 
 export default function AppDemoDate({ onComplete }: { onComplete: () => void }) {
-  const [alexImgLoaded, setAlexImgLoaded] = useState(false);
   const [stage, setStage] = useState<Stage>("list");
 
   useEffect(() => {
     const t1 = setTimeout(() => setStage("alex-arrives"), 800);
     const t2 = setTimeout(() => setStage("tap"), 2400);
     const t3 = setTimeout(() => setStage("expanded"), 2900);
-    const t4 = setTimeout(onComplete, 7500);
+    const t4 = setTimeout(onComplete, 5000);
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
   }, [onComplete]);
 
@@ -126,14 +125,8 @@ export default function AppDemoDate({ onComplete }: { onComplete: () => void }) 
 
               {/* Collapsed row — always visible as the header */}
               <div className="flex items-center gap-3 px-4 py-3">
-                <div className="w-9 h-9 rounded-full ring-1 ring-offset-1 ring-offset-card ring-pink-500/20 bg-gradient-to-br from-pink-400/40 to-pink-300/10 flex-shrink-0 overflow-hidden flex items-center justify-center">
-                  <img
-                    src={ALEX_IMG} alt="Alex"
-                    className={`w-full h-full object-cover transition-opacity duration-300 ${alexImgLoaded ? "opacity-100" : "opacity-0"}`}
-                    onLoad={() => setAlexImgLoaded(true)}
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                  />
-                  {!alexImgLoaded && <span className="text-sm">😊</span>}
+                <div className="w-9 h-9 rounded-full ring-1 ring-offset-1 ring-offset-card ring-pink-500/20 bg-gradient-to-br from-pink-400/40 to-pink-300/10 flex-shrink-0 overflow-hidden">
+                  <img src={ALEX_IMG} alt="Alex" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[11px] font-semibold text-foreground">Alex, 27 · Saturday 2pm</p>
