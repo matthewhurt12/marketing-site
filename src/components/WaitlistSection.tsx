@@ -53,8 +53,11 @@ export default function WaitlistSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease }}
           >
-            <p className="text-primary font-medium text-sm tracking-wide">
-              You're on the list. We'll be in touch.
+            <p className="text-primary font-medium text-sm tracking-wide mb-2">
+              You're in. First dates are being planned now.
+            </p>
+            <p className="text-muted-foreground text-xs">
+              We'll reach out when it's your turn.
             </p>
           </motion.div>
         ) : (

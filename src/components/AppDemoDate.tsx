@@ -4,9 +4,9 @@ import { MapPin, CalendarDays, Coffee, Heart, Check, Lock } from "lucide-react";
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
-const ALEX_IMG = "/alex-profile.jpg";
-const JORDAN_IMG = "/jordan-profile.jpg";
-const SAM_IMG = "/sam-profile.jpg";
+const ALEX_IMG = "/alex-profile.webp";
+const JORDAN_IMG = "/jordan-profile.webp";
+const SAM_IMG = "/sam-profile.webp";
 
 type Stage = "list" | "alex-arrives" | "tap" | "expanded";
 

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Heart, X, Check, MapPin, CalendarDays, Coffee } from "lucide-react";
 
 const ease = [0.23, 1, 0.32, 1] as const;
-const PROFILE_IMAGE = "/alex-profile.jpg";
+const PROFILE_IMAGE = "/alex-profile.webp";
 
 export default function AppDemoMatch({ onComplete }: { onComplete: () => void }) {
   const [barWidth, setBarWidth] = useState(0);
