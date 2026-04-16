@@ -27,7 +27,7 @@ export default function HeroSection() {
           transition={{ delay: 0.3, duration: 1, ease }}
           className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-5"
         >
-          What if you never had to swipe again?
+          Dating, without the app part
         </motion.p>
 
         <motion.div
