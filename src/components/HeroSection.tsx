@@ -27,7 +27,7 @@ export default function HeroSection() {
           transition={{ delay: 0.3, duration: 1, ease }}
           className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-5"
         >
-          Dating, without the app part
+          Date with a plan
         </motion.p>
 
         <motion.div
@@ -36,8 +36,8 @@ export default function HeroSection() {
           transition={{ delay: 0.5, duration: 1.2, ease }}
           className="flex flex-col items-center mb-12 md:mb-16"
         >
-          <img src="/logo.png" alt="" className="w-20 h-20 md:w-28 md:h-28 mb-6 drop-shadow-lg" />
-          <h1 className="font-display text-6xl md:text-[15vw] font-light tracking-tight text-foreground leading-[0.9]">
+          <img src="/logo.png" alt="" className="w-24 h-24 md:w-32 md:h-32 mb-7" />
+          <h1 className="font-display font-bold text-[clamp(3rem,9vw,7rem)] tracking-normal text-foreground leading-[0.95]">
             In Person
           </h1>
         </motion.div>
@@ -52,9 +52,9 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9, duration: 1, ease }}
-            className="text-lg md:text-xl text-muted-foreground font-sans mb-8 max-w-md mx-auto"
+            className="text-lg md:text-xl text-muted-foreground mb-8 max-w-md mx-auto"
           >
-            An AI concierge plans your dates. You just show up.
+            One person, chosen for you. One night, planned for you.
           </motion.p>
           <a
             href="#waitlist"

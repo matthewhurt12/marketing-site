@@ -15,3 +15,6 @@ Thumbs.db
 # Editor
 .vscode/
 *.swp
+
+# Local Claude Code tooling (dev preview config)
+.claude/

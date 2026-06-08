@@ -4,32 +4,39 @@
 
 @layer base {
   :root {
-    --background: 220 15% 10%;
-    --foreground: 210 15% 90%;
+    /* Dreamy onboarding palette — sourced from the In Person app brand */
+    --background: 249 54% 16%;        /* #1a1340 dream base */
+    --foreground: 250 24% 95%;        /* #eeedf5 dream text */
 
-    --card: 220 15% 13%;
-    --card-foreground: 210 15% 90%;
+    --card: 250 42% 20%;
+    --card-foreground: 250 24% 95%;
 
-    --popover: 220 15% 12%;
-    --popover-foreground: 210 15% 90%;
+    --popover: 250 45% 18%;
+    --popover-foreground: 250 24% 95%;
 
-    --primary: 210 55% 65%;
+    --primary: 249 67% 57%;           /* #5d48db brand violet */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 16%;
-    --secondary-foreground: 210 15% 85%;
+    --secondary: 250 30% 26%;
+    --secondary-foreground: 250 20% 90%;
 
-    --muted: 220 12% 18%;
-    --muted-foreground: 210 10% 55%;
+    --muted: 250 24% 28%;
+    --muted-foreground: 250 22% 80%;
 
-    --accent: 220 15% 16%;
-    --accent-foreground: 210 15% 90%;
+    --accent: 262 55% 68%;
+    --accent-foreground: 250 35% 14%;
 
-    --border: 220 12% 20%;
-    --input: 220 12% 18%;
-    --ring: 210 55% 65%;
+    --border: 255 24% 32%;
+    --input: 250 28% 26%;
+    --ring: 249 67% 57%;
 
-    --radius: 1rem;
+    /* Brand accent hues (dreamy onboarding spectrum) */
+    --lilac: 261 100% 77%;            /* #b48cff */
+    --warm: 16 100% 74%;              /* #ff9b78 */
+    --rose: 329 77% 71%;              /* #ee7bb6 */
+    --gold: 37 66% 65%;               /* #e0b36a */
+
+    --radius: 1.25rem;
   }
 }
 
@@ -39,7 +46,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-display antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -55,18 +62,31 @@
   }
 }
 
-@layer utilities {
-  @keyframes obd-fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+@layer components {
+  /* One shared content column so section edges line up down the page.
+     .container-site = outer rhythm (nav/footer/hero ≈ 1024px, 24px padding).
+     .container-readable = inner text column for centered statement blocks. */
+  .container-site {
+    width: 100%;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
   }
 
+  .container-readable {
+    width: 100%;
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+}
+
+@layer utilities {
   .shadow-angelic {
-    box-shadow: 0 20px 50px -12px hsl(210 55% 70% / 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 24px 60px -18px hsl(249 67% 60% / 0.45), 0 8px 18px -6px hsl(249 60% 12% / 0.4);
   }
 
   .shadow-angelic-sm {
-    box-shadow: 0 10px 30px -10px hsl(210 55% 70% / 0.12);
+    box-shadow: 0 12px 34px -12px hsl(249 67% 60% / 0.4);
   }
 
   .aura-transition {
@@ -74,7 +94,7 @@
   }
 
   .font-display {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Spectral', Georgia, serif;
   }
 
   @keyframes aura-pulse {
@@ -91,11 +111,11 @@
   @keyframes cta-breathe {
     0%, 100% {
       transform: scale(1);
-      box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
+      box-shadow: 0 0 0 0 hsl(var(--lilac) / 0);
     }
     50% {
       transform: scale(1.03);
-      box-shadow: 0 0 20px 4px hsl(var(--primary) / 0.15);
+      box-shadow: 0 0 28px 6px hsl(var(--lilac) / 0.25);
     }
   }
 
@@ -108,6 +128,53 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Dreamy onboarding background — one layer, three drifting radial blobs.
+     Painted behind all content (z-index:-1) so there are no seams or banding.
+     Exact blob stops sourced from the app's blob-gradient. */
+  .dreamy-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-color: #1a1340;
+    background-image:
+      radial-gradient(55% 50% at 70% 38%,
+        rgba(255, 155, 120, 0.72) 0%, rgba(238, 123, 182, 0.58) 18%,
+        rgba(199, 90, 214, 0.42) 38%, rgba(139, 85, 232, 0.28) 58%,
+        rgba(93, 72, 219, 0.16) 76%, rgba(44, 33, 106, 0.06) 90%, transparent 100%),
+      radial-gradient(50% 48% at 38% 62%,
+        rgba(177, 124, 255, 0.52) 0%, rgba(141, 96, 242, 0.42) 24%,
+        rgba(104, 79, 220, 0.30) 48%, rgba(73, 53, 156, 0.16) 70%,
+        rgba(40, 30, 100, 0.06) 88%, transparent 100%),
+      radial-gradient(30% 28% at 35% 30%,
+        rgba(255, 160, 120, 0.24) 0%, rgba(234, 125, 194, 0.16) 34%,
+        rgba(220, 100, 180, 0.08) 68%, transparent 100%);
+    background-size: 160% 160%;
+    background-position: 0% 0%, 100% 100%, 0% 100%;
+    animation: dreamy-drift 32s ease-in-out infinite alternate;
+  }
+
+  /* Same dreamy background, scoped INSIDE the phone screen (absolute + drifting),
+     since the phone interior is opaque and the page bg can't show through. */
+  .phone-dream-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: #1a1340;
+    background-image:
+      radial-gradient(58% 50% at 74% 16%, rgba(255, 155, 120, 0.46) 0%, rgba(238, 123, 182, 0.34) 20%, rgba(199, 90, 214, 0.24) 42%, rgba(139, 85, 232, 0.16) 62%, rgba(93, 72, 219, 0.08) 80%, transparent 100%),
+      radial-gradient(54% 50% at 22% 60%, rgba(177, 124, 255, 0.40) 0%, rgba(141, 96, 242, 0.28) 28%, rgba(104, 79, 220, 0.16) 56%, transparent 84%),
+      radial-gradient(34% 30% at 40% 30%, rgba(255, 160, 120, 0.20) 0%, rgba(234, 125, 194, 0.12) 40%, transparent 76%);
+    background-size: 170% 170%;
+    background-position: 0% 0%, 100% 100%, 0% 100%;
+    animation: dreamy-drift 26s ease-in-out infinite alternate;
+  }
+
+  @keyframes dreamy-drift {
+    0% { background-position: 0% 0%, 100% 100%, 0% 100%; }
+    50% { background-position: 60% 40%, 40% 60%, 50% 30%; }
+    100% { background-position: 20% 80%, 80% 20%, 30% 70%; }
   }
 
   .animate-cta-breathe {
@@ -125,7 +192,9 @@
   @media (prefers-reduced-motion: reduce) {
     .animate-cta-breathe,
     .animate-aura-pulse,
-    .animate-float-up {
+    .animate-float-up,
+    .dreamy-bg,
+    .phone-dream-bg {
       animation: none;
     }
 

@@ -2,10 +2,10 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const statements = [
-  { text: "You've spent hours swiping.", color: "text-foreground" },
-  { text: "You've had conversations that went nowhere.", color: "text-foreground" },
-  { text: "What if you just... showed up?", color: "text-foreground" },
-  { text: "AI that thinks like a matchmaker, not an algorithm.", color: "text-primary" },
+  { text: "Dating apps gave you a thousand faces.", color: "text-foreground" },
+  { text: "Hundreds of matches. Nothing real.", color: "text-foreground" },
+  { text: "What if you just… showed up?", color: "text-foreground" },
+  { text: "We're doing the opposite.", color: "text-lilac" },
 ];
 
 const lineVariants = {
@@ -20,9 +20,9 @@ export default function IndictmentScroll() {
   return (
     <section
       ref={ref}
-      className="py-28 md:py-40 px-6 flex items-center justify-center"
+      className="py-24 md:py-36 px-6 flex items-center justify-center"
     >
-      <div className="mx-auto max-w-3xl flex flex-col items-center gap-5 md:gap-7">
+      <div className="container-readable flex flex-col items-center gap-5 md:gap-7">
         {statements.map((s, i) => (
           <motion.p
             key={i}
@@ -30,11 +30,11 @@ export default function IndictmentScroll() {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             transition={{
-              duration: 0.6,
-              delay: i * 0.8,
+              duration: 0.9,
+              delay: i * 1.3,
               ease: [0.23, 1, 0.32, 1],
             }}
-            className={`font-display text-3xl sm:text-4xl md:text-6xl font-light tracking-tight text-center ${s.color}`}
+            className={`font-display text-3xl sm:text-4xl md:text-6xl font-bold tracking-normal text-center ${s.color}`}
           >
             {s.text}
           </motion.p>

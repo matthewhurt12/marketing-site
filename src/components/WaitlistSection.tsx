@@ -32,14 +32,14 @@ export default function WaitlistSection() {
   };
 
   return (
-    <section id="waitlist" ref={ref} className="py-32 md:py-48 px-6">
+    <section id="waitlist" ref={ref} className="py-24 md:py-36 px-6">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1, ease }}
         className="mx-auto max-w-md text-center"
       >
-        <h2 className="font-display text-4xl md:text-5xl font-light tracking-tight text-foreground mb-4">
+        <h2 className="font-display text-4xl md:text-5xl font-bold tracking-normal text-foreground mb-4">
           Your next date is already planned.
         </h2>
 

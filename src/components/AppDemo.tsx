@@ -1,222 +1,247 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import AppDemoChat from "./AppDemoChat";
-import AppDemoMatch from "./AppDemoMatch";
-import AppDemoDate from "./AppDemoDate";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
+import { Check } from "lucide-react";
+import AppDemoInterview from "./AppDemoInterview";
+import AppDemoVibes from "./AppDemoVibes";
+import AppDemoProposal from "./AppDemoProposal";
+import Confetti from "./Confetti";
 
-type Phase = "chat" | "search" | "match" | "date" | "closing";
+type Scene = "interview" | "vibes" | "matching" | "proposal" | "confirmed";
 
-const captions: Record<Phase, string> = {
-  chat: "A real conversation. Not a questionnaire.",
-  search: "AI that actually understands you.",
-  match: "One match. Chosen with intention.",
-  date: "Everything planned. Just show up.",
-  closing: "",
+const captions: Record<Scene, string> = {
+  interview: "A real conversation. Not a questionnaire.",
+  vibes: "You pick the kind of night.",
+  matching: "One match, chosen with intention.",
+  proposal: "A person — and a plan.",
+  confirmed: "Then you just show up.",
 };
 
-const SEARCH_DURATION = 3000;
-const CLOSING_DURATION = 7000;
+const progressFor: Record<Scene, number> = {
+  interview: 0.5,
+  vibes: 0.78,
+  matching: 0.92,
+  proposal: 1,
+  confirmed: 1,
+};
+
+const MATCHING_MS = 1500;
+const CONFIRMED_MS = 2900;
+
+function TopBar({ progress }: { progress: number }) {
+  return (
+    <div className="flex flex-none flex-col items-center gap-2 pb-3">
+      <div className="flex items-center gap-1.5">
+        <img src="/logo.png" alt="" className="h-5 w-5" />
+        <span className="font-display text-[12px] font-bold text-white">In Person</span>
+      </div>
+      <div className="h-1 w-[68%] overflow-hidden rounded-full bg-white/15">
+        <motion.div
+          className="h-full rounded-full bg-[#b48cff]"
+          initial={false}
+          animate={{ width: `${Math.round(progress * 100)}%` }}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Matching() {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-5 px-8 text-center">
+      <div className="relative h-16 w-16">
+        <span className="absolute inset-0 rounded-full bg-[#b48cff]/15 animate-aura-pulse" />
+        <span
+          className="absolute inset-0 rounded-full bg-[#b48cff]/15 animate-aura-pulse"
+          style={{ animationDelay: "1.2s" }}
+        />
+        <span className="absolute inset-[38%] rounded-full bg-[#b48cff]" />
+      </div>
+      <p className="max-w-[230px] font-display text-lg font-bold leading-snug text-white">
+        Finding someone you'll enjoy meeting…
+      </p>
+    </div>
+  );
+}
+
+function Confirmed() {
+  return (
+    <div className="relative flex h-full flex-col items-center justify-center gap-3 px-8 text-center">
+      <Confetti count={22} />
+      <motion.div
+        initial={{ scale: 0.6, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 14 }}
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-[#b48cff]/20"
+      >
+        <Check className="h-8 w-8 stroke-[2.5] text-[#b48cff]" />
+      </motion.div>
+      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#b48cff]">Plan set</p>
+      <p className="font-display text-2xl font-bold text-white">Your date is confirmed</p>
+      <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] text-white/80">
+        Confirmed · Chat opens 10 min before
+      </span>
+    </div>
+  );
+}
 
 export default function AppDemo() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-20%" });
-  const [phase, setPhase] = useState<Phase>("chat");
+  const reduced = useReducedMotion();
+  const [scene, setScene] = useState<Scene>("interview");
   const [started, setStarted] = useState(false);
 
+  // Reduced motion: hold the proposal (the payoff frame) statically.
   useEffect(() => {
+    if (reduced) {
+      setStarted(true);
+      setScene("proposal");
+    }
+  }, [reduced]);
+
+  // Start the loop when scrolled into view; reset when it leaves.
+  useEffect(() => {
+    if (reduced) return;
     if (isInView && !started) {
       setStarted(true);
-      setPhase("chat");
+      setScene("interview");
     }
-  }, [isInView, started]);
+  }, [isInView, started, reduced]);
 
   useEffect(() => {
+    if (reduced) return;
     if (!isInView && started) {
       setStarted(false);
-      setPhase("chat");
+      setScene("interview");
     }
-  }, [isInView, started]);
+  }, [isInView, started, reduced]);
 
-  const advanceFrom = useCallback((from: Phase) => {
-    const next: Record<Phase, Phase> = {
-      chat: "search",
-      search: "match",
-      match: "date",
-      date: "closing",
-      closing: "chat",
-    };
-    setPhase(next[from]);
-  }, []);
+  const go = useCallback((next: Scene) => setScene(next), []);
 
+  // Timed bridges (scenes without an onComplete child).
   useEffect(() => {
-    if (phase === "search") {
-      const t = setTimeout(() => advanceFrom("search"), SEARCH_DURATION);
+    if (!started || reduced) return;
+    if (scene === "matching") {
+      const t = setTimeout(() => go("proposal"), MATCHING_MS);
       return () => clearTimeout(t);
     }
-    if (phase === "closing") {
-      const t = setTimeout(() => advanceFrom("closing"), CLOSING_DURATION);
+    if (scene === "confirmed") {
+      const t = setTimeout(() => go("interview"), CONFIRMED_MS);
       return () => clearTimeout(t);
     }
-  }, [phase, advanceFrom]);
+  }, [scene, started, reduced, go]);
 
-  const handleComplete = useCallback(() => {
-    advanceFrom(phase);
-  }, [phase, advanceFrom]);
+  const showTopBar = scene === "interview" || scene === "vibes";
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-40 px-6">
+    <section ref={sectionRef} className="py-24 md:py-36 px-6">
       <motion.p
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-        className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground text-center mb-12"
+        className="mb-12 text-center text-[11px] uppercase tracking-[0.3em] text-muted-foreground"
       >
         See how it works
       </motion.p>
 
-      <div className="mx-auto flex flex-col items-center gap-8 max-w-lg">
-        {/* Phone frame */}
-        <div className="relative w-full max-w-[380px] md:max-w-[420px] aspect-[9/17] rounded-[2.5rem] border-2 border-border/40 bg-card overflow-hidden">
+      <div className="mx-auto flex max-w-lg flex-col items-center gap-8">
+        {/* Phone */}
+        <div className="relative aspect-[9/18] w-full max-w-[340px] overflow-hidden rounded-[2.75rem] border-2 border-white/15 bg-[#1a1340] shadow-angelic md:max-w-[370px]">
+          {/* Drifting dreamy interior (behind content) */}
+          <div className="phone-dream-bg" />
+
           {/* Notch */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-background rounded-b-2xl z-20" />
+          <div className="absolute left-1/2 top-0 z-30 h-6 w-24 -translate-x-1/2 rounded-b-2xl bg-[#130d30]" />
 
-          <div className="absolute inset-0 pt-8">
-            <AnimatePresence mode="wait">
-              {phase === "chat" && started && (
-                <motion.div
-                  key="chat"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="h-full"
-                >
-                  <AppDemoChat onComplete={handleComplete} />
-                </motion.div>
-              )}
+          <div className="absolute inset-0 z-10 flex flex-col pt-8">
+            {showTopBar && <TopBar progress={progressFor[scene]} />}
 
-              {phase === "search" && (
-                <motion.div
-                  key="search"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="h-full flex flex-col"
-                >
-                  {/* Mini app header */}
-                  <div className="flex-none flex items-center justify-between px-5 pt-3 pb-2">
-                    <div className="w-8 h-8 rounded-full bg-secondary/60" />
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[9px] font-semibold text-muted-foreground tabular-nums">72%</span>
-                      <div className="w-8 h-8 rounded-full bg-secondary/60 flex items-center justify-center">
-                        <svg className="w-3.5 h-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Searching state */}
-                  <div className="flex-1 flex flex-col items-center justify-center gap-4">
-                    <div className="relative w-20 h-20 mb-4">
-                      <div className="absolute inset-0 rounded-full bg-primary/10 animate-aura-pulse" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full bg-primary/15 animate-aura-pulse" style={{ animationDelay: "0.7s" }} />
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-3.5 h-3.5 rounded-full bg-primary/40" />
-                      </div>
-                    </div>
-                    <div className="text-center px-6">
-                      <p className="text-[8px] uppercase tracking-[0.25em] text-primary mb-3">
-                        State of Grace
-                      </p>
-                      <h2 className="font-display text-lg font-light text-foreground mb-2 italic leading-snug">
-                        Finding someone you'll{"\n"}enjoy meeting…
-                      </h2>
-                      <p className="text-[10px] text-muted-foreground">
-                        We're working on it — you'll see a match here soon.
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              {phase === "match" && (
-                <motion.div
-                  key="match"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="h-full"
-                >
-                  <AppDemoMatch onComplete={handleComplete} />
-                </motion.div>
-              )}
-
-              {phase === "date" && (
-                <motion.div
-                  key="date"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="h-full"
-                >
-                  <AppDemoDate onComplete={handleComplete} />
-                </motion.div>
-              )}
-
-              {phase === "closing" && (
-                <motion.div
-                  key="closing"
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
-                  className="h-full flex flex-col items-center justify-center px-8 gap-6"
-                >
-                  <p className="font-display text-3xl text-foreground text-center leading-snug">
-                    Then you meet —<br />in person.
-                  </p>
+            <div className="relative min-h-0 flex-1">
+              <AnimatePresence mode="wait">
+                {started && scene === "interview" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 2, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-                    className="flex flex-col items-center gap-4"
+                    key="interview"
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    <a
-                      href="#waitlist"
-                      className="bg-primary text-primary-foreground px-8 py-3.5 rounded-full text-sm font-medium tracking-widest uppercase aura-transition hover:opacity-90 shadow-angelic-sm"
-                    >
-                      Join the Waitlist
-                    </a>
-                    <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
-                      Your turn.
-                    </p>
+                    <AppDemoInterview onComplete={() => go("vibes")} />
                   </motion.div>
-                </motion.div>
-              )}
+                )}
 
-            </AnimatePresence>
+                {scene === "vibes" && (
+                  <motion.div
+                    key="vibes"
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <AppDemoVibes onComplete={() => go("matching")} />
+                  </motion.div>
+                )}
+
+                {scene === "matching" && (
+                  <motion.div
+                    key="matching"
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <Matching />
+                  </motion.div>
+                )}
+
+                {scene === "proposal" && (
+                  <motion.div
+                    key="proposal"
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <AppDemoProposal onComplete={() => go("confirmed")} reduced={!!reduced} />
+                  </motion.div>
+                )}
+
+                {scene === "confirmed" && (
+                  <motion.div
+                    key="confirmed"
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <Confirmed />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
 
         {/* Caption */}
-        <div className="h-8 flex items-center justify-center">
+        <div className="flex h-8 items-center justify-center">
           <AnimatePresence mode="wait">
-            {captions[phase] && (
-              <motion.p
-                key={phase}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                className="text-sm text-muted-foreground text-center"
-              >
-                {captions[phase]}
-              </motion.p>
-            )}
+            <motion.p
+              key={scene}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+              className="text-center text-sm text-muted-foreground"
+            >
+              {captions[scene]}
+            </motion.p>
           </AnimatePresence>
         </div>
       </div>

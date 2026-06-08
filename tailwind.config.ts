@@ -11,7 +11,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Cormorant Garamond", "serif"],
+        display: ["Spectral", "Georgia", "serif"],
         sans: ["Instrument Sans", "sans-serif"],
       },
       colors: {
@@ -40,6 +40,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        lilac: "hsl(var(--lilac))",
+        warm: "hsl(var(--warm))",
+        rose: "hsl(var(--rose))",
+        gold: "hsl(var(--gold))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -48,8 +52,8 @@ export default {
       },
       boxShadow: {
         angelic:
-          "0 20px 50px -12px hsl(210 55% 70% / 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.02)",
-        "angelic-sm": "0 10px 30px -10px hsl(210 55% 70% / 0.12)",
+          "0 24px 60px -18px hsl(249 67% 60% / 0.45), 0 8px 18px -6px hsl(249 60% 12% / 0.4)",
+        "angelic-sm": "0 12px 34px -12px hsl(249 67% 60% / 0.4)",
       },
     },
   },

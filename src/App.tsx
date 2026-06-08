@@ -1,6 +1,6 @@
 import SiteNav from "@/components/SiteNav";
 import GrainOverlay from "@/components/GrainOverlay";
-import DarkPetals from "@/components/DarkPetals";
+import DreamBackground from "@/components/DreamBackground";
 import HeroSection from "@/components/HeroSection";
 import IndictmentScroll from "@/components/IndictmentScroll";
 import AppDemo from "@/components/AppDemo";
@@ -11,7 +11,7 @@ import SiteFooter from "@/components/SiteFooter";
 export default function App() {
   return (
     <div className="relative">
-      <DarkPetals />
+      <DreamBackground />
       <GrainOverlay />
       <SiteNav />
       <main>
