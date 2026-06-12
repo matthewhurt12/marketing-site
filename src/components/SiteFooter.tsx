@@ -17,6 +17,9 @@ export default function SiteFooter() {
       <p className="container-site text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground mt-8">
         Made for people who'd rather be on a date than on an app.
       </p>
+      <p className="container-site text-center text-[10px] text-muted-foreground mt-3">
+        In Person is owned and operated by Kinetic Social LLC, a Texas limited liability company.
+      </p>
     </footer>
   );
 }
