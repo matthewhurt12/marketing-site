@@ -51,13 +51,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // 2) Always notify by email — the reliable capture path, with or without an audience.
+  //    The recipient lives in an env var so the owner's address stays out of the source.
+  const notifyEmail = process.env.WAITLIST_NOTIFY_EMAIL || "matthewhurt999@gmail.com";
   try {
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({
         from: "In Person <onboarding@resend.dev>",
-        to: "matthewhurt999@gmail.com",
+        to: notifyEmail,
         subject: "New Waitlist Signup",
         html: `<p>New waitlist signup: <strong>${cleanEmail}</strong></p>`,
       }),

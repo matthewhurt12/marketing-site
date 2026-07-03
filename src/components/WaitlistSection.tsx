@@ -61,7 +61,7 @@ export default function WaitlistSection() {
             </p>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 flex-wrap">
             <input
               type="email"
               required
@@ -81,6 +81,12 @@ export default function WaitlistSection() {
             {status === "error" && (
               <p className="text-xs text-red-400 mt-2 sm:mt-0 sm:self-center">Something went wrong. Try again.</p>
             )}
+            <p className="w-full text-[11px] text-muted-foreground mt-3">
+              By joining, you agree to our{" "}
+              <a href="/terms" className="underline hover:text-lilac aura-transition">Terms</a>
+              {" "}and{" "}
+              <a href="/privacy" className="underline hover:text-lilac aura-transition">Privacy Policy</a>.
+            </p>
           </form>
         )}
       </motion.div>

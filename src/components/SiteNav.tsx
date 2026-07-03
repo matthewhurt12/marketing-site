@@ -11,14 +11,14 @@ export default function SiteNav() {
         style={{ opacity: bgOpacity }}
       />
       <div className="container-site relative flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2.5">
+        <a href="/" className="flex items-center gap-2.5">
           <img src="/logo.png" alt="In Person" className="h-9 w-9" />
           <span className="font-display text-lg font-bold tracking-normal text-foreground">
             In Person
           </span>
         </a>
         <a
-          href="#waitlist"
+          href="/#waitlist"
           className="bg-primary text-primary-foreground px-6 py-2.5 rounded-full text-xs font-medium tracking-widest uppercase aura-transition hover:opacity-90"
         >
           Join Waitlist

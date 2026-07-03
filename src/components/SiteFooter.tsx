@@ -9,8 +9,8 @@ export default function SiteFooter() {
           </span>
         </div>
         <div className="flex items-center gap-6 text-xs text-muted-foreground">
-          <a href="#" className="hover:text-lilac aura-transition">Privacy</a>
-          <a href="#" className="hover:text-lilac aura-transition">Terms</a>
+          <a href="/privacy" className="hover:text-lilac aura-transition">Privacy</a>
+          <a href="/terms" className="hover:text-lilac aura-transition">Terms</a>
           <a href="#" className="hover:text-lilac aura-transition">Instagram</a>
         </div>
       </div>
