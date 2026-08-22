@@ -135,7 +135,7 @@ export default function AppDemo() {
   const showTopBar = scene === "interview" || scene === "vibes";
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-36 px-6">
+    <section id="how-it-works" ref={sectionRef} className="py-24 md:py-36 px-6">
       <motion.p
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}

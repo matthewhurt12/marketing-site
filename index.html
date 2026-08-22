@@ -2,26 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1a1340" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="application-name" content="In Person" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="In Person" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>In Person — Date with a plan.</title>
     <meta name="description" content="In Person is your matchmaking concierge. One person, chosen for you. One night, planned for you. No swiping, no small talk. Just show up." />
     <link rel="canonical" href="https://tryinperson.com/" />
     <meta property="og:title" content="In Person — Date with a plan." />
     <meta property="og:description" content="In Person is your matchmaking concierge. One person, chosen for you. One night, planned for you. No swiping, no small talk. Just show up." />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="In Person" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:url" content="https://tryinperson.com/" />
-    <meta property="og:image" content="https://tryinperson.com/api/og" />
+    <meta property="og:image" content="https://tryinperson.com/inperson-share-2026.png" />
+    <meta property="og:image:secure_url" content="https://tryinperson.com/inperson-share-2026.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="In Person — Date with a plan. One person chosen and one night planned for you." />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://tryinperson.com/api/og" />
+    <meta name="twitter:title" content="In Person — Date with a plan." />
+    <meta name="twitter:description" content="One person, chosen for you. One night, planned for you. No swiping—just show up." />
+    <meta name="twitter:image" content="https://tryinperson.com/inperson-share-2026.png" />
+    <meta name="twitter:image:alt" content="In Person — Date with a plan. One person chosen and one night planned for you." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://tryinperson.com/#website",
+            "url": "https://tryinperson.com/",
+            "name": "In Person",
+            "alternateName": "Try In Person",
+            "description": "A matchmaking concierge that chooses one person and plans one night for you.",
+            "inLanguage": "en-US",
+            "publisher": { "@id": "https://tryinperson.com/#organization" }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://tryinperson.com/#organization",
+            "name": "In Person",
+            "legalName": "Kinetic Social LLC",
+            "url": "https://tryinperson.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://tryinperson.com/icon-512.png",
+              "width": 512,
+              "height": 512
+            },
+            "image": "https://tryinperson.com/inperson-share-2026.png"
+          }
+        ]
+      }
+    </script>
     <link rel="preload" as="image" href="/alex-profile.webp" />
     <link rel="preload" as="image" href="/jordan-profile.webp" />
     <link rel="preload" as="image" href="/sam-profile.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-    <style>html{scroll-behavior:smooth}</style>
-    <script type="text/javascript">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <style>html{scroll-behavior:smooth}@keyframes sp-pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.6);opacity:0}}</style>
+    <script>
       (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
@@ -41,10 +92,6 @@
       </div>
       <p style="font-family:'Spectral',Georgia,serif;font-size:20px;font-weight:700;letter-spacing:0;color:rgba(238,237,245,.85);margin:0">In Person</p>
     </div>
-
-    <style>
-      @keyframes sp-pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.6);opacity:0}}
-    </style>
 
     <script type="module" src="/src/main.tsx"></script>
   </body>

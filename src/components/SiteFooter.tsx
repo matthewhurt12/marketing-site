@@ -11,7 +11,6 @@ export default function SiteFooter() {
         <div className="flex items-center gap-6 text-xs text-muted-foreground">
           <a href="/privacy" className="hover:text-lilac aura-transition">Privacy</a>
           <a href="/terms" className="hover:text-lilac aura-transition">Terms</a>
-          <a href="#" className="hover:text-lilac aura-transition">Instagram</a>
         </div>
       </div>
       <p className="container-site text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground mt-8">

@@ -32,10 +32,11 @@
 
 ```
 marketing-site/
-├─ index.html                 # HTML shell: font links (Spectral + Instrument Sans), <title>/OG meta,
+├─ index.html                 # Home HTML shell: canonical SEO, OG/Twitter, JSON-LD, fonts,
 │                             #   Microsoft Clarity snippet, and the pre-React splash screen.   [RESKINNED]
-├─ package.json               # dependencies + scripts (dev / build / preview)
-├─ vite.config.ts             # Vite: React-SWC plugin, "@" → ./src alias, dev server port 3000
+├─ {privacy,terms}.html       # Route-specific crawlable metadata shells for the legal pages
+├─ package.json               # dependencies + scripts (dev / build / preview / generate:assets)
+├─ vite.config.ts             # Vite: React plugin, three HTML inputs, "@" → ./src, port 3000
 ├─ tailwind.config.ts         # Tailwind theme: maps brand colors → CSS vars, fonts, radii, shadows  [RESKINNED]
 ├─ tsconfig.json              # TypeScript config
 ├─ postcss.config.js          # PostCSS (tailwindcss + autoprefixer)
@@ -44,10 +45,13 @@ marketing-site/
 │
 ├─ api/                       # Vercel serverless functions (run on the server, not in the browser)
 │  ├─ waitlist.ts             #   POST { email } → sends a notification via Resend to matthewhurt999@gmail.com
-│  └─ og.tsx                  #   generates the social-share OG image via @vercel/og  (check brand colors/copy)
 │
 ├─ public/                    # static assets served as-is
-│  ├─ logo.png                #   the brand heart mark (pink→purple→blue). Matches the brand guide.
+│  ├─ logo.png                #   the source brand heart mark (pink→purple→blue)
+│  ├─ inperson-share-2026.png #   static 1200×630 social-link preview
+│  ├─ icon-*.png, apple-touch-icon.png, favicon-*.png
+│  ├─ site.webmanifest        #   Android/Chrome install identity and app shortcuts
+│  ├─ robots.txt, sitemap.xml #   crawler discovery files for tryinperson.com
 │  └─ {alex,jordan,sam}-profile.{jpg,webp}   # demo profile photos used by the phone demo
 │
 ├─ style-reference/           # SNAPSHOT of the real app's UI components (shadcn/ui + app screens like
@@ -170,7 +174,7 @@ preview.**
   → shows sending / success / error states.
 - **`api/waitlist.ts`** (server): validates the email and calls the **Resend** API to email a
   signup notification to `matthewhurt999@gmail.com`. Needs `RESEND_API_KEY` env var.
-- **`api/og.tsx`** (server): renders the Open Graph share image with `@vercel/og`.
+- Social previews use the static, versioned **`public/inperson-share-2026.png`** asset.
 
 ---
 

@@ -1,8 +1,16 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+type ApiRequest = {
+  method?: string;
+  body?: Record<string, unknown>;
+};
+
+type ApiResponse = {
+  status(code: number): ApiResponse;
+  json(body: Record<string, unknown>): unknown;
+};
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }

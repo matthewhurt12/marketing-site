@@ -1,0 +1,43 @@
+{
+  "id": "/",
+  "name": "In Person — Date with a plan",
+  "short_name": "In Person",
+  "description": "A matchmaking concierge that chooses one person and plans one night for you.",
+  "lang": "en-US",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1a1340",
+  "theme_color": "#1a1340",
+  "categories": ["lifestyle", "social"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Join the waitlist",
+      "short_name": "Join",
+      "url": "/#waitlist",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "See how it works",
+      "short_name": "How it works",
+      "url": "/#how-it-works",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}
