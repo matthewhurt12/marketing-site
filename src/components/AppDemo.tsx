@@ -31,7 +31,7 @@ function TopBar({ progress }: { progress: number }) {
   return (
     <div className="flex flex-none flex-col items-center gap-2 pb-3">
       <div className="flex items-center gap-1.5">
-        <img src="/logo.png" alt="" className="h-5 w-5" />
+        <img src="/brand-mark-192.png" alt="" className="h-5 w-5" />
         <span className="font-display text-[12px] font-bold text-white">In Person</span>
       </div>
       <div className="h-1 w-[68%] overflow-hidden rounded-full bg-white/15">

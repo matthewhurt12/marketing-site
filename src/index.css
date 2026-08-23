@@ -46,9 +46,14 @@
   }
 
   body {
-    @apply bg-background text-foreground font-display antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(214, 184, 255, 0.28);
+    color: #ffffff;
   }
 
   ::-webkit-scrollbar {
@@ -187,6 +192,105 @@
 
   .animate-float-up {
     animation: float-up 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  .v2-text-gradient {
+    color: transparent;
+    background: linear-gradient(112deg, #ffffff 4%, #ddbfff 45%, #f2a8cb 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .v2-hero-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.22;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(to bottom, black, transparent 82%);
+  }
+
+  .v2-hero-glow {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .v2-hero-glow-one {
+    right: -8rem;
+    top: 4rem;
+    width: 38rem;
+    height: 38rem;
+    background: radial-gradient(circle, rgba(235, 118, 181, 0.24), rgba(138, 91, 226, 0.08) 48%, transparent 72%);
+  }
+
+  .v2-hero-glow-two {
+    left: -18rem;
+    bottom: -18rem;
+    width: 42rem;
+    height: 42rem;
+    background: radial-gradient(circle, rgba(110, 132, 242, 0.19), transparent 68%);
+  }
+
+  .v2-invitation {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)),
+      radial-gradient(circle at 78% 8%, rgba(237, 133, 189, 0.24), transparent 38%),
+      radial-gradient(circle at 10% 92%, rgba(123, 99, 233, 0.24), transparent 42%);
+  }
+
+  .v2-dot-field {
+    opacity: 0.18;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.18) 0.8px, transparent 0.8px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(circle at 75% 50%, black, transparent 68%);
+  }
+
+  .v2-product-shell {
+    background:
+      radial-gradient(circle at 85% 8%, rgba(238, 123, 182, 0.22), transparent 34%),
+      radial-gradient(circle at 5% 92%, rgba(113, 91, 226, 0.25), transparent 38%),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025));
+  }
+
+  .v2-principle-lines {
+    opacity: 0.2;
+    background-image:
+      linear-gradient(115deg, transparent 0 48%, rgba(255, 255, 255, 0.06) 49%, transparent 50%),
+      linear-gradient(65deg, transparent 0 62%, rgba(214, 184, 255, 0.07) 63%, transparent 64%);
+    background-size: 360px 360px, 420px 420px;
+    mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent);
+  }
+
+  .v2-waitlist-glow {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    width: min(82vw, 64rem);
+    height: min(82vw, 64rem);
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(180, 140, 255, 0.2), rgba(238, 123, 182, 0.1) 35%, transparent 68%);
+    filter: blur(22px);
+  }
+
+  .v2-card-grid {
+    opacity: 0.17;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(circle, black, transparent 74%);
+  }
+
+  #how-it-works,
+  #why-in-person,
+  #questions,
+  #waitlist {
+    scroll-margin-top: 5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

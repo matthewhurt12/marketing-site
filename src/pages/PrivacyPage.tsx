@@ -2,7 +2,7 @@ import LegalPage, { LegalSection } from "@/pages/LegalPage";
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" effectiveDate="July 2, 2026">
+    <LegalPage title="Privacy Policy" effectiveDate="August 22, 2026">
       <LegalSection title="1. Who We Are">
         <p>
           In Person is owned and operated by Kinetic Social LLC, a Texas
@@ -33,6 +33,12 @@ export default function PrivacyPage() {
             cookieless and does not identify you personally or track you
             across other websites.
           </li>
+          <li>
+            <span className="text-foreground">Web font requests.</span> The Site
+            loads typefaces through Google Fonts. When your browser requests
+            those files, Google may receive standard request information such
+            as your IP address and browser details.
+          </li>
         </ul>
         <p>
           We do not use third-party advertising trackers or sell your
@@ -50,19 +56,21 @@ export default function PrivacyPage() {
 
       <LegalSection title="4. Where Your Information Is Stored">
         <p>
-          Waitlist emails are stored securely with our email service provider,
-          Resend, and are accessible only to us. The Site is hosted on Vercel.
-          These providers process data on our behalf under their own security
-          and privacy commitments; the waitlist is never published or visible
-          to other visitors.
+          Waitlist emails are processed and stored with our email service
+          provider, Resend. A signup notification may also be delivered to our
+          private administrative email account, which is currently hosted by
+          Google. The Site is hosted on Vercel. These providers process data to
+          help us operate the Site and waitlist; the waitlist is never
+          published or visible to other visitors.
         </p>
       </LegalSection>
 
       <LegalSection title="5. Sharing">
         <p>
           We do not sell, rent, or trade your personal information. We share it
-          only with the service providers named above (to operate the Site and
-          send email), or if the law requires us to.
+          only with the service providers named above (to host the Site, load
+          its fonts, operate the waitlist, and send email), or if the law
+          requires us to.
         </p>
       </LegalSection>
 

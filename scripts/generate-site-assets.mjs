@@ -19,11 +19,16 @@ await Promise.all(
   iconSizes.map((size) =>
     sharp(logoPath)
       .resize(size, size, { fit: "cover" })
-      .flatten({ background: "#1a1340" })
+      .flatten({ background: "#120c29" })
       .png({ compressionLevel: 9, palette: size <= 32 })
       .toFile(path.join(publicDir, iconNames.get(size))),
   ),
 );
+
+await sharp(logoPath)
+  .resize(192, 192, { fit: "cover" })
+  .png({ compressionLevel: 9 })
+  .toFile(path.join(publicDir, "brand-mark-192.png"));
 
 const shareBackground = Buffer.from(`
   <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
@@ -50,11 +55,11 @@ const shareBackground = Buffer.from(`
     <rect width="1200" height="630" fill="url(#blue)"/>
     <circle cx="235" cy="315" r="175" fill="#C69BFF" fill-opacity="0.12" filter="url(#blur)"/>
     <rect x="54" y="54" width="1092" height="522" rx="40" fill="none" stroke="#FFFFFF" stroke-opacity="0.13" stroke-width="2"/>
-    <text x="405" y="250" fill="#F8F5FF" font-family="Georgia, 'Times New Roman', serif" font-size="82" font-weight="700" letter-spacing="-2">In Person</text>
-    <text x="408" y="319" fill="#E7DBFF" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="600" letter-spacing="-0.5">Date with a plan.</text>
-    <text x="410" y="385" fill="#D7D0E8" font-family="Arial, Helvetica, sans-serif" font-size="26">One person, chosen for you.</text>
-    <text x="410" y="424" fill="#D7D0E8" font-family="Arial, Helvetica, sans-serif" font-size="26">One night, planned for you.</text>
-    <text x="410" y="500" fill="#F3B9D7" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="3">TRYINPERSON.COM</text>
+    <text x="405" y="190" fill="#F3B9D7" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="5">IN PERSON</text>
+    <text x="402" y="285" fill="#F8F5FF" font-family="Georgia, 'Times New Roman', serif" font-size="61" font-weight="700" letter-spacing="-1.5">Dating should end</text>
+    <text x="402" y="352" fill="#F8F5FF" font-family="Georgia, 'Times New Roman', serif" font-size="61" font-weight="700" font-style="italic" letter-spacing="-1.5">in a date.</text>
+    <text x="408" y="430" fill="#D7D0E8" font-family="Arial, Helvetica, sans-serif" font-size="24">One thoughtful introduction. One clear plan.</text>
+    <text x="410" y="510" fill="#CDB6FF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" letter-spacing="3">TRYINPERSON.COM</text>
   </svg>
 `);
 
@@ -66,6 +71,6 @@ const shareLogo = await sharp(logoPath)
 await sharp(shareBackground)
   .composite([{ input: shareLogo, left: 111, top: 191 }])
   .png({ compressionLevel: 9 })
-  .toFile(path.join(publicDir, "inperson-share-2026.png"));
+  .toFile(path.join(publicDir, "inperson-share-v2-2026.png"));
 
 console.log("Generated In Person social preview and install icon assets.");
