@@ -2,7 +2,7 @@ import LegalPage, { LegalSection } from "@/pages/LegalPage";
 
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" effectiveDate="August 22, 2026">
+    <LegalPage title="Privacy Policy" effectiveDate="August 23, 2026">
       <LegalSection title="1. Who We Are">
         <p>
           In Person is owned and operated by Kinetic Social LLC, a Texas
@@ -24,7 +24,10 @@ export default function PrivacyPage() {
             <span className="text-foreground">Basic technical data.</span> Like
             most websites, our hosting provider automatically records standard
             server logs (such as IP address, browser type, and pages
-            requested) to keep the Site running and secure.
+            requested) to keep the Site running and secure. To prevent waitlist
+            abuse, we temporarily use a one-way identifier derived from your
+            network address for rate limiting; the raw address is not stored in
+            the waitlist database.
           </li>
           <li>
             <span className="text-foreground">Anonymous usage analytics.</span>{" "}
@@ -56,12 +59,10 @@ export default function PrivacyPage() {
 
       <LegalSection title="4. Where Your Information Is Stored">
         <p>
-          Waitlist emails are processed and stored with our email service
-          provider, Resend. A signup notification may also be delivered to our
-          private administrative email account, which is currently hosted by
-          Google. The Site is hosted on Vercel. These providers process data to
-          help us operate the Site and waitlist; the waitlist is never
-          published or visible to other visitors.
+          Waitlist emails are stored in our private Supabase database. This
+          preview Site is hosted on Vercel. These providers process data only to help us
+          operate the Site and waitlist. The public counter shows the total
+          number of signups, never anyone&apos;s email or identity.
         </p>
       </LegalSection>
 
@@ -69,7 +70,7 @@ export default function PrivacyPage() {
         <p>
           We do not sell, rent, or trade your personal information. We share it
           only with the service providers named above (to host the Site, load
-          its fonts, operate the waitlist, and send email), or if the law
+          its fonts, and operate the waitlist), or if the law
           requires us to.
         </p>
       </LegalSection>

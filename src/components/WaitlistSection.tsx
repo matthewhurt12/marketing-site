@@ -1,8 +1,35 @@
 import { ArrowRight, Check, Mail } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const WAITLIST_API = "https://tryinperson.com/api/waitlist";
+
+function AnimatedCount({ value }: { value: number }) {
+  const displayedRef = useRef(0);
+  const [displayed, setDisplayed] = useState(0);
+
+  useEffect(() => {
+    const from = displayedRef.current;
+    const startedAt = performance.now();
+    const duration = from === 0 ? 700 : 420;
+    let frame = 0;
+
+    const update = (now: number) => {
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const next = Math.round(from + (value - from) * eased);
+      displayedRef.current = next;
+      setDisplayed(next);
+      if (progress < 1) frame = requestAnimationFrame(update);
+    };
+
+    frame = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(frame);
+  }, [value]);
+
+  return <>{displayed.toLocaleString()}</>;
+}
 
 export default function WaitlistSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -10,6 +37,20 @@ export default function WaitlistSection() {
   const reduceMotion = useReducedMotion();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("Something went wrong. Please try again.");
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(WAITLIST_API, { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : Promise.reject(new Error("Count unavailable"))))
+      .then((result: { count?: unknown }) => {
+        if (typeof result.count === "number") setCount(result.count);
+      })
+      .catch(() => undefined);
+
+    return () => controller.abort();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,13 +58,18 @@ export default function WaitlistSection() {
 
     setStatus("sending");
     try {
-      const response = await fetch("/api/waitlist", {
+      const form = new FormData(event.currentTarget);
+      const response = await fetch(WAITLIST_API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, company: form.get("company") }),
       });
-      setStatus(response.ok ? "success" : "error");
-    } catch {
+      const result = (await response.json().catch(() => null)) as { count?: number; error?: string } | null;
+      if (!response.ok) throw new Error(result?.error || "Something went wrong. Please try again.");
+      if (typeof result?.count === "number") setCount(result.count);
+      setStatus("success");
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
       setStatus("error");
     }
   };
@@ -48,6 +94,17 @@ export default function WaitlistSection() {
           <p className="mt-6 max-w-md font-sans text-base leading-relaxed text-[#211543]/58 sm:text-lg">
             Join the early list. We&apos;ll tell you when In Person is ready near you.
           </p>
+          <div className="mt-8 max-w-md rounded-[1.5rem] border border-[#211543]/10 bg-white/68 p-5 shadow-[0_18px_55px_rgba(43,26,77,0.08)]">
+            <div className="flex items-end justify-between gap-4">
+              <p className="font-display text-4xl font-semibold tracking-[-0.05em] text-[#211543]">
+                {count === null ? "Join early" : <AnimatedCount value={count} />}
+              </p>
+              <p className="pb-1 text-right font-sans text-[10px] font-bold uppercase tracking-[0.14em] text-[#7558be]">
+                {count === null ? "Growing now" : "People already joined"}
+              </p>
+            </div>
+            <p className="mt-3 font-sans text-xs text-[#211543]/48">Every real signup moves the number.</p>
+          </div>
         </div>
 
         <div className="rounded-[2rem] bg-[#17102f] p-4 text-white shadow-[0_28px_80px_rgba(23,16,47,0.25)] sm:p-6">
@@ -83,6 +140,10 @@ export default function WaitlistSection() {
                     disabled={status === "sending"}
                     className="min-w-0 flex-1 bg-transparent py-4 font-sans text-sm text-white outline-none placeholder:text-white/28 disabled:opacity-50"
                   />
+                  <label className="absolute left-[-10000px] h-px w-px overflow-hidden" aria-hidden="true">
+                    Company
+                    <input name="company" tabIndex={-1} autoComplete="off" />
+                  </label>
                 </div>
                 <button
                   type="submit"
@@ -96,7 +157,7 @@ export default function WaitlistSection() {
 
               <div aria-live="polite" className="min-h-6 pt-3">
                 {status === "error" ? (
-                  <p className="font-sans text-xs text-[#ffaaa0]">Something went wrong. Please try again.</p>
+                  <p className="font-sans text-xs text-[#ffaaa0]">{errorMessage}</p>
                 ) : (
                   <p className="font-sans text-xs text-white/46">Free · 18+ · No payment required · Unsubscribe anytime</p>
                 )}
