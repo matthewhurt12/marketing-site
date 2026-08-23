@@ -24,28 +24,23 @@ They are separate In Person product projects.
 ```text
 DreamBackground
 GrainOverlay
-SiteNav
+  SiteNav
   HeroSection
-  ProblemReset
   ExperienceStory
   DateLifeSection
-  PrinciplesSection
-  FAQSection
   WaitlistSection
 SiteFooter
 ```
 
-- `HeroSection.tsx`: editorial hero and illustrative invitation artifact.
-- `ProblemReset.tsx`: category reset from endless profile browsing to one invitation.
-- `ExperienceStory.tsx`: four-stage product narrative and interactive preview.
-- `DateLifeSection.tsx`: editorial date-setting image chapter using `public/onboarding/`.
-- `PrinciplesSection.tsx`: product principles, comparison, trust, and agency.
-- `FAQSection.tsx`: truthful availability, launch, pricing, and waitlist answers.
+- `HeroSection.tsx`: instant AI-matchmaker positioning and a scan-first product preview.
+- `ExperienceStory.tsx`: the three-step Talk / Match / Meet story.
+- `DateLifeSection.tsx`: short real-world date chapter using `public/onboarding/`.
 - `WaitlistSection.tsx`: email form posting to `/api/waitlist`.
 - `SiteNav.tsx` and `SiteFooter.tsx`: global navigation and legal links.
 
-Legacy `AppDemo*`, `IndictmentScroll`, and `AntiPositioning` components remain in
-the repository for reference but are not mounted by the V2 home page.
+Legacy `AppDemo*`, `ProblemReset`, `PrinciplesSection`, `FAQSection`,
+`IndictmentScroll`, and `AntiPositioning` components remain in the repository for
+reference but are not mounted by the concise V2 home page.
 
 ## Routes and server behavior
 
@@ -63,7 +58,7 @@ The waitlist requires `RESEND_API_KEY`; `RESEND_AUDIENCE_ID` and
 - `public/logo.png`: source heart mark.
 - `public/brand-mark-192.png`: transparent UI mark.
 - `public/icon-*.png`, `apple-touch-icon.png`, `favicon-*.png`: install/browser icons.
-- `public/inperson-share-v2-2026.png`: 1200x630 social-link preview.
+- `public/inperson-share-v3-2026.png`: 1200x630 social-link preview.
 - `public/site.webmanifest`: installable web-app identity.
 - `public/robots.txt` and `public/sitemap.xml`: crawler discovery.
 - `scripts/generate-site-assets.mjs`: regenerates the social card and icon set.

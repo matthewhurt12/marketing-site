@@ -55,10 +55,10 @@ const shareBackground = Buffer.from(`
     <rect width="1200" height="630" fill="url(#blue)"/>
     <circle cx="235" cy="315" r="175" fill="#C69BFF" fill-opacity="0.12" filter="url(#blur)"/>
     <rect x="54" y="54" width="1092" height="522" rx="40" fill="none" stroke="#FFFFFF" stroke-opacity="0.13" stroke-width="2"/>
-    <text x="405" y="190" fill="#F3B9D7" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="5">IN PERSON</text>
-    <text x="402" y="285" fill="#F8F5FF" font-family="Georgia, 'Times New Roman', serif" font-size="61" font-weight="700" letter-spacing="-1.5">Dating should end</text>
-    <text x="402" y="352" fill="#F8F5FF" font-family="Georgia, 'Times New Roman', serif" font-size="61" font-weight="700" font-style="italic" letter-spacing="-1.5">in a date.</text>
-    <text x="408" y="430" fill="#D7D0E8" font-family="Arial, Helvetica, sans-serif" font-size="24">One thoughtful introduction. One clear plan.</text>
+    <text x="405" y="190" fill="#F3B9D7" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="5">IN PERSON · AI MATCHMAKING</text>
+    <text x="402" y="285" fill="#F8F5FF" font-family="Georgia, 'Times New Roman', serif" font-size="61" font-weight="700" letter-spacing="-1.5">Less swiping.</text>
+    <text x="402" y="352" fill="#F8F5FF" font-family="Georgia, 'Times New Roman', serif" font-size="61" font-weight="700" font-style="italic" letter-spacing="-1.5">More actual dates.</text>
+    <text x="408" y="430" fill="#D7D0E8" font-family="Arial, Helvetica, sans-serif" font-size="24">Meet your AI matchmaker.</text>
     <text x="410" y="510" fill="#CDB6FF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" letter-spacing="3">TRYINPERSON.COM</text>
   </svg>
 `);
@@ -71,6 +71,6 @@ const shareLogo = await sharp(logoPath)
 await sharp(shareBackground)
   .composite([{ input: shareLogo, left: 111, top: 191 }])
   .png({ compressionLevel: 9 })
-  .toFile(path.join(publicDir, "inperson-share-v2-2026.png"));
+  .toFile(path.join(publicDir, "inperson-share-v3-2026.png"));
 
 console.log("Generated In Person social preview and install icon assets.");
